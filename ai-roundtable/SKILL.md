@@ -5,11 +5,11 @@ description: >-
   driving it through the Claude in Chrome browser extension, using the user's
   own subscription instead of a paid API. Use this whenever the user wants a
   second AI to weigh in, review, brainstorm, debug, or co-solve a problem
-  WITHOUT copy-pasting between tabs themselves — trigger phrases include "让
-  ChatGPT 一起讨论 / 一起看看 / 帮我评审", "找另一个 AI 讨论", "和 ChatGPT 协作", "问问 ChatGPT
-  怎么想", "让你们俩对一下", "get a second opinion from ChatGPT", "have ChatGPT review
-  this", "bounce this off another model", or any request to run a back-and-forth
-  between Claude and ChatGPT. Also use it when the user is stuck and wants two
+  WITHOUT copy-pasting between tabs themselves — trigger phrases include "get a
+  second opinion from ChatGPT", "have ChatGPT review this", "bounce this off
+  another model", "discuss this with ChatGPT", "let the two of you debate it",
+  or any equivalent request in any language to run a back-and-forth between
+  Claude and ChatGPT. Also use it when the user is stuck and wants two
   models to cross-check each other before committing to an implementation. Do
   NOT use it for calling model APIs — this skill is specifically the no-API,
   browser-driven path.
@@ -94,7 +94,7 @@ You don't need to paste the ledger to the user every turn, but keep it current
 internally and show it when it helps them see where things stand — especially at
 convergence.
 
-## Anti-echo-chamber protocol (field-tested 2026-07-20)
+## Anti-echo-chamber protocol (field-tested)
 
 The failure mode that makes a two-AI roundtable worthless: ChatGPT only knows
 the problem through *your* framing, so it politely agrees with you, and the user

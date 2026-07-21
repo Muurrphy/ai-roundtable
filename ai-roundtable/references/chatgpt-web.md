@@ -89,13 +89,13 @@ You want the newest assistant turn, not the entire transcript. Options:
 
 Strip UI chrome ("Copy", "Regenerate", model labels) from what you relay.
 
-## Field-tested lessons (2026-07-20, real session)
+## Field-tested lessons
 
-These were all hit in one real session; treat them as defaults, not edge cases.
+These were all hit in real sessions; treat them as defaults, not edge cases.
 
 **Long text: inject, never type.** Typing a 600+ character message with the
-`type` action froze the renderer and silently dropped Latin characters and
-digits from mixed Chinese/English text. Use `javascript_tool` instead:
+`type` action can freeze the renderer and silently drop characters from
+mixed-language text. Use `javascript_tool` instead:
 
 ```js
 const ed = document.querySelector('#prompt-textarea')
@@ -107,22 +107,23 @@ document.execCommand('insertText', false, MSG);
 ed.textContent.length  // verify count matches what you sent
 ```
 
-Then send by clicking the button via JS (`[data-testid="send-button"]` or
-`button[aria-label*="发送"]`), not by pressing Enter.
+Then send by clicking the button via JS (`[data-testid="send-button"]`; note
+that `aria-label` text is localized to the account's UI language, so prefer
+`data-testid`), not by pressing Enter.
 
 **Permission modals kill the generation stream.** An apps/connector permission
-popup appeared mid-generation and the reply died after ~56s of thinking with a
-single character of output — twice, identically. If a reply comes back
-absurdly short after long thinking, look for a modal, dismiss it (e.g. the
-"知道了" button), and ask ChatGPT to re-answer. Symptom signature:
-`generating:false, lastLen:1`.
+popup can appear mid-generation and silently kill the reply — observed as ~56s
+of thinking followed by a single character of output, reproducibly. If a reply
+comes back absurdly short after long thinking, look for a modal, dismiss it
+(an "OK"/"Got it" button, localized), and ask ChatGPT to re-answer. Symptom
+signature: `generating:false, lastLen:1`.
 
 **Poll completion cheaply via JS**, not screenshots:
 
 ```js
 JSON.stringify({
   generating: !!document.querySelector(
-    '[data-testid="stop-button"], button[aria-label*="停止"]'),
+    '[data-testid="stop-button"]'),  // aria-labels are locale-dependent
   turns: document.querySelectorAll(
     '[data-message-author-role="assistant"]').length,
   lastLen: (document.querySelectorAll(
@@ -180,3 +181,4 @@ get_page_text  ->  take the last assistant block
 
 # relay to user, add your take, decide whether to continue
 ```
+
